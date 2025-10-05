@@ -1,0 +1,98 @@
+source code :-
+
+import tm1637 
+from time import sleep 
+# Import thread module for running tasks in background. 
+# Python 2 uses thread, Python 3 renamed it to _thread. 
+try: 
+import thread 
+except ImportError: 
+import _thread as thread 
+# Initialize TM1637 display object with CLK on GPIO21 and DIO on GPIO20. 
+# Brightness range is from 0.0 (lowest) to 1.0 (highest). 
+Display = tm1637.TM1637(clk=21, dio=20, brightness=1.0) 
+try: 
+print("Starting clock in the background (press CTRL+C to stop):") 
+# Start the clock display in background thread. 
+# military_time=True means 24-hour clock format. 
+Display.StartClock(military_time=True) 
+10  
+ 
+ 
+    # Set the brightness to maximum (1.0). 
+    Display.SetBrightness(1.0) 
+ 
+    # Main loop to toggle the colon (double point) on the display every second 
+    while True: 
+        Display.ShowDoublepoint(True)  # Turn on colon/double point 
+        sleep(1)                       # Wait for 1 second 
+        Display.ShowDoublepoint(False) # Turn off colon/double point 
+        sleep(1)                       # Wait for 1 second 
+ 
+except KeyboardInterrupt: 
+    # If Ctrl+C is pressed, stop the clock and clean up the display before exiting. 
+    print("Properly closing the clock") 
+    Display.StopClock() 
+    Display.cleanup()
+
+
+
+Clock Display :-
+
+from time import sleep 
+import tm1637 
+# Initialize the TM1637 display 
+CLK = 21  # Clock pin 
+DIO = 20  # Data pin 
+display = tm1637.TM1637(CLK, DIO) 
+ 
+# Set display brightness (0-7) 
+display.brightness(1) 
+11  
+ 
+try: 
+    # Start the clock in the background (12-hour format) 
+    display.StartClock(military_time=False) 
+ 
+    while True: 
+        sleep(1)  # Keep the script running 
+except KeyboardInterrupt: 
+    # Stop the clock and clean up when CTRL + C is pressed 
+    display.StopClock() 
+    display.Clear() 
+    display.cleanup() 
+ 
+Extra:  
+import tm1637 
+from time import sleep 
+try: 
+        import thread 
+except ImportError: 
+    import _thread as thread 
+         
+Display = tm1637.TM1637(clk=21, dio=20, brightness=1.0) 
+try: 
+    print("Starting clock in the background(press CTRL+C to stop):") 
+    Display.StartClock(military_time=True) 
+    Display.SetBrightness(1.0) 
+   While True: 
+    Display.ShowDounlepoint(True) 
+12  
+sleep(1)      
+Display.ShowDounlepoint(False) 
+sleep(1)    
+Display.StopClock() 
+thread.interrupt_main() 
+except KeyboardInterrupt: 
+print("Properly closing the clock") 
+Display.cleanup() 
+
+
+
+Command :- pip3 install raspberrypi-tm1637
+
+connection :- 	CLK -> 38
+		DIO -> 40
+		VCC -> 1
+		GND -> 6
+

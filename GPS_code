@@ -52,3 +52,5 @@ Commands:- sudo apt-get update
 	sudo apt install gpsd gpsd-clients python3-gps
 	#sudo systemctl stop gpsd.socket
 	#sudo gpsd /dev/serial0 -F /var/run/gpsd.sock
+
+GPIO Pins :- 29 , 31, 32 , 33 , 35 ,36 , 37 , 38, 40

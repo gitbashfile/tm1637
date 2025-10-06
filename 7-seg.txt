@@ -96,3 +96,5 @@ connection :- 	CLK -> 38
 		VCC -> 1
 		GND -> 6
 
+GPIO Pins :- 29 , 31, 32 , 33 , 35 ,36 , 37 , 38, 40
+

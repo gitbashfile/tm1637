@@ -1,0 +1,69 @@
+source code for image :- 
+
+from picamera import PiCamera 
+import datetime 
+import os 
+ 
+# Create directory if not exists 
+image_folder = '/home/pi/images' 
+os.makedirs(image_folder, exist_ok=True) 
+camera = PiCamera() 
+camera.resolution = (1024, 768)  # Optional: Set resolution 
+t
+ imestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S") 
+#image_path = f"{image_folder}/image_{timestamp}.jpg" 
+image_path = "{}/image_{}.jpg".format(image_folder, timestamp) 
+camera.start_preview()  # Optional: Shows camera preview 
+camera.capture(image_path) 
+camera.stop_preview() 
+#print(f"Image captured and saved to {image_path}") 
+print("Image captured and saved to {}".format(image_path))
+
+
+SOURCE CODE FOR VEDIO :-
+
+from picamera import PiCamera 
+from time import sleep 
+import datetime 
+import os 
+import subprocess 
+# Create directory if not exists 
+  
+video_folder = '/home/pi/videos' 
+os.makedirs(video_folder, exist_ok=True) 
+camera = PiCamera() 
+camera.resolution = (1024, 768)  # Optional: Set resolution 
+timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S") 
+video_h264_path = "{}/video_{}.h264".format(video_folder, timestamp) 
+video_mp4_path = "{}/video_{}.mp4".format(video_folder, timestamp) 
+camera.start_preview()  # Optional: Shows camera preview 
+camera.start_recording(video_h264_path) 
+sleep(10)  # Records for 10 seconds (change as needed) 
+camera.stop_recording() 
+camera.stop_preview() 
+print("Raw video recorded and saved to {}".format(video_h264_path)) 
+# Convert .h264 to .mp4 using MP4Box (install with sudo apt install gpac) 
+convert_command = ["MP4Box", "-add", video_h264_path, video_mp4_path] 
+try: 
+subprocess.run(convert_command, check=True) 
+print("Converted to MP4: {}".format(video_mp4_path)) 
+# Optional: Remove raw .h264 file if conversion successful 
+os.remove(video_h264_path) 
+except Exception as e: 
+print("Failed to convert video:", e)
+
+
+COMMANDS :- 
+
+
+sudo raspi-config  - # for configuring interface I2C 
+Interface -> enable Camera 
+reboot 
+sudo apt-get update 
+sudo apt-get upgrade 
+sudo apt install python3-picamera
+
+
+CONNECTION :-
+		
+		
